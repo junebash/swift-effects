@@ -4,7 +4,8 @@ extension Effect {
   }
 }
 
-public struct Merge2Effect<First: Effect, Second: Effect>: Effect where First.Value == Second.Value {
+public struct Merge2Effect<First: Effect, Second: Effect>: Effect
+where First.Value == Second.Value {
   public typealias Value = First.Value
 
   public let first: First

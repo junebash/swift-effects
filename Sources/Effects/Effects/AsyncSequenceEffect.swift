@@ -29,9 +29,7 @@ public struct AsyncSequenceEffect<S: AsyncSequence & Sendable>: Effect {
   public func run(_ send: some Receiver<S.Element>) async {
     do {
       for try await value in sequence {
-        try Task.checkCancellation()
         await send(value)
-        try Task.checkCancellation()
       }
     } catch is CancellationError {
       return

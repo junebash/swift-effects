@@ -12,12 +12,11 @@ public actor EffectCancellables {
   @TaskLocal public static var current: EffectCancellables = .init()
 
   @inlinable
-  public func enqueueTask<ID>(_ task: Task<Void, Never>, forID id: ID.Type, cancelInFlight: Bool) {
-    enqueueTask(task, forID: ObjectIdentifier(id), cancelInFlight: cancelInFlight)
-  }
-
-  @inlinable
-  public func enqueueTask(_ task: Task<Void, Never>, forID key: some Hashable & Sendable, cancelInFlight: Bool) {
+  public func enqueueTask(
+    _ task: Task<Void, Never>,
+    forID key: some Hashable & Sendable,
+    cancelInFlight: Bool
+  ) {
     if cancelInFlight, let existingTask = tasks.removeValue(forKey: key) {
       existingTask.cancel()
     }
@@ -25,13 +24,22 @@ public actor EffectCancellables {
   }
 
   @inlinable
-  public func cancelTask<ID>(forID: ID.Type) {
-    cancelTask(forID: ObjectIdentifier(ID.self))
+  public func enqueueTask<ID>(
+    _ task: Task<Void, Never>,
+    forID id: ID.Type,
+    cancelInFlight: Bool
+  ) {
+    enqueueTask(task, forID: ObjectIdentifier(id), cancelInFlight: cancelInFlight)
   }
 
   @inlinable
   public func cancelTask(forID key: some Hashable & Sendable) {
     guard let task = tasks.removeValue(forKey: key) else { return }
     task.cancel()
+  }
+
+  @inlinable
+  public func cancelTask<ID>(forID: ID.Type) {
+    cancelTask(forID: ObjectIdentifier(ID.self))
   }
 }
