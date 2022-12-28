@@ -8,6 +8,24 @@
         "revision" : "937e904258d22af6e447a0b72c0bc67583ef64a2",
         "version" : "1.0.4"
       }
+    },
+    {
+      "identity" : "swift-lock",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/junebash/swift-lock",
+      "state" : {
+        "branch" : "main",
+        "revision" : "0ddc399f8aa684af1c29d3069fb2f9765eb03739"
+      }
+    },
+    {
+      "identity" : "swift-uuid",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/junebash/swift-uuid",
+      "state" : {
+        "branch" : "main",
+        "revision" : "6db906369a1fedfd2fe9024b2a35fb630780caa8"
+      }
     }
   ],
   "version" : 2

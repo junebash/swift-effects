@@ -21,13 +21,13 @@ final class EffectCancellationTests: XCTestCase {
     let effect = LongRunningEffect()
       .cancellable(id: CancelID.self)
     let send = TestSend<Int>()
-    let semaphore = Semaphore()
+    let semaphore = Signaller()
 
     let effectTask = Task.detached {
-      await semaphore.open()
+      await semaphore.signal()
       await effect.run(send)
     }
-    await semaphore.waitForOpen()
+    await semaphore.wait()
 
     let cancelEffect = CancelEffect<Int>(id: CancelID.self)
     await cancelEffect.run(send)

@@ -46,14 +46,14 @@ final class AsyncSequenceEffectTests: XCTestCase {
 
     let effect = stream.effect()
     let send = TestSend<Int>()
-    let semaphore = Semaphore()
+    let semaphore = Signaller()
 
     let effectTask = Task {
-      await semaphore.open()
+      await semaphore.signal()
       await effect.run(send)
     }
 
-    await semaphore.waitForOpen()
+    await semaphore.wait()
     effectTask.cancel()
     await effectTask.value
 

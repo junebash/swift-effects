@@ -18,18 +18,22 @@ let package = Package(
     ),
   ],
   dependencies: [
-    .package(url: "https://github.com/apple/swift-collections", from: Version(1, 0, 0))
+    .package(url: "https://github.com/apple/swift-collections", from: Version(1, 0, 0)),
+    .package(url: "https://github.com/junebash/swift-uuid", branch: "main")
   ],
   targets: [
     .target(
       name: "Effects",
       dependencies: [
-        .product(name: "Collections", package: "swift-collections")
-      ]
+        .product(name: "Collections", package: "swift-collections"),
+        .product(name: "UUID", package: "swift-uuid")
+      ],
+      swiftSettings: [.unsafeFlags(["-Xfrontend", "-warn-concurrency"])]
     ),
     .testTarget(
       name: "EffectsTests",
-      dependencies: ["Effects"]
+      dependencies: ["Effects"],
+      swiftSettings: [.unsafeFlags(["-Xfrontend", "-warn-concurrency"])]
     ),
   ]
 )
