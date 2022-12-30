@@ -1,6 +1,6 @@
 import Effects
 
-actor TestSend<Value>: Receiver {
+actor TestSend<Value: Sendable>: Receiver {
   var values: [Value] = []
 
   func send(_ value: Value) {

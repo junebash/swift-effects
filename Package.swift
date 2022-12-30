@@ -25,7 +25,7 @@ let package = Package(
     .target(
       name: "Effects",
       dependencies: [
-        .product(name: "Collections", package: "swift-collections"),
+        .product(name: "DequeModule", package: "swift-collections"),
         .product(name: "UUID", package: "swift-uuid")
       ],
       swiftSettings: [.unsafeFlags(["-Xfrontend", "-warn-concurrency"])]

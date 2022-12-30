@@ -1,5 +1,5 @@
 #if canImport(Combine)
-import Combine
+@preconcurrency import Combine
 
 public struct PublisherEffect<P: Publisher>: Effect where P.Failure == Never {
   public typealias Value = P.Output
@@ -31,7 +31,7 @@ public struct PublisherEffect<P: Publisher>: Effect where P.Failure == Never {
   }
 }
 
-extension Publisher where Failure == Never {
+extension Publisher where Failure == Never, Self: Sendable {
   public var effect: PublisherEffect<Self> {
     .init({ self })
   }

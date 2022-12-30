@@ -1,4 +1,4 @@
-extension AsyncSequence {
+extension AsyncSequence where Self: Sendable {
   public func effect(
     catch handleError: (@Sendable (Error, any Receiver<Element>) async -> Void)?
   ) -> AsyncSequenceEffect<Self> {

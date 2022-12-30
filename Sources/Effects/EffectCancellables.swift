@@ -1,6 +1,17 @@
+@usableFromInline
+internal struct HashableSendable: Hashable, @unchecked Sendable {
+  @usableFromInline
+  internal let value: AnyHashable
+
+  @inlinable
+  internal init<Value: Hashable & Sendable>(_ value: Value) {
+    self.value = value
+  }
+}
+
 public actor EffectCancellables {
   @usableFromInline
-  internal var tasks: [AnyHashable: AutoCancel] = [:]
+  internal var tasks: [HashableSendable: AutoCancel] = [:]
 
   public init() {}
 
@@ -17,6 +28,7 @@ public actor EffectCancellables {
     forID key: some Hashable & Sendable,
     cancelInFlight: Bool
   ) {
+    let key = HashableSendable(key)
     if cancelInFlight, let existingTask = tasks.removeValue(forKey: key) {
       existingTask.cancel()
     }
@@ -34,6 +46,7 @@ public actor EffectCancellables {
 
   @inlinable
   public func cancelTask(forID key: some Hashable & Sendable) {
+    let key = HashableSendable(key)
     guard let task = tasks.removeValue(forKey: key) else { return }
     task.cancel()
   }
